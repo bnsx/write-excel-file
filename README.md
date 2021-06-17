@@ -184,40 +184,6 @@ stream.pipe(output)
 
 Not implemented. I'm not familiar with TypeScript.
 
-## Browser compatibility
-
-Node.js `*.xlxs` parser uses `xpath` and `xmldom` packages for XML parsing. The same packages could be used in a browser because [all modern browsers](https://caniuse.com/#search=domparser) (except IE 11) have native `DOMParser` built-in which could is used instead (meaning smaller footprint and better performance) but since Internet Explorer 11 support is still required the browser version doesn't use the native `DOMParser` and instead uses `xpath` and `xmldom` packages for XML parsing just like the Node.js version.
-
-## Gotchas
-
-### Formulas
-
-Dynamically calculated cells using formulas (`SUM`, etc) are not supported.
-
-## Advanced
-
-By default it reads the first sheet in the document. If you have multiple sheets in your spreadsheet then pass either `sheet: number` (sheet index, starting from `1`) or `sheet: string` (sheet name) as part of the `options` argument (`options.sheet` is `1` by default):
-
-```js
-readXlsxFile(file, { sheet: 2 }).then((data) => {
-  ...
-})
-```
-
-```js
-readXlsxFile(file, { sheet: 'Sheet1' }).then((data) => {
-  ...
-})
-```
-
-To get the list of sheets one can pass `getSheets: true` option:
-
-```js
-readXlsxFile(file, { getSheets: true }).then((sheets) => {
-  // sheets === [{ name: 'Sheet1' }, { name: 'Sheet2' }]
-})
-```
-
 ## CDN
 
 One can use any npm CDN service, e.g. [unpkg.com](https://unpkg.com) or [jsdelivr.net](https://jsdelivr.net)
@@ -232,13 +198,11 @@ One can use any npm CDN service, e.g. [unpkg.com](https://unpkg.com) or [jsdeliv
 
 ## References
 
-For XML parsing [`xmldom`](https://github.com/jindw/xmldom) and [`xpath`](https://github.com/goto100/xpath) are used.
-
-Writing `*.xlsx` files has been copy-pasted from [`zipcelx`](https://medium.com/@Nopziiemoo/create-excel-files-using-javascript-without-all-the-fuss-2c4aa5377813) package.
+Writing `*.xlsx` files was originally copy-pasted from [`zipcelx`](https://medium.com/@Nopziiemoo/create-excel-files-using-javascript-without-all-the-fuss-2c4aa5377813) package, and then rewritten.
 
 ## GitHub
 
-On March 9th, 2020, GitHub, Inc. silently [banned](https://medium.com/@catamphetamine/how-github-blocked-me-and-all-my-libraries-c32c61f061d3) my account (and all my libraries) without any notice. I opened a support ticked but they didn't answer. Because of that, I had to move all my libraries to [GitLab](https://gitlab.com/catamphetamine).
+On March 9th, 2020, GitHub, Inc. silently [banned](https://medium.com/@catamphetamine/how-github-blocked-me-and-all-my-libraries-c32c61f061d3) my account (erasing all my repos, issues and comments, even in my employer's private repos) without any notice or explanation. Because of that, all source codes had to be promptly moved to GitLab. The [GitHub repo](https://github.com/catamphetamine/write-excel-file) is now only used as a backup (you can star the repo there too), and the primary repo is now the [GitLab one](https://gitlab.com/catamphetamine/write-excel-file). Issues can be reported in any repo.
 
 ## License
 
