@@ -1,10 +1,10 @@
 # `write-excel-file`
 
-Write simple `*.xlsx` files in a browser or Node.js.
+Write simple `*.xlsx` files in a browser or Node.js
 
 [Demo](https://catamphetamine.gitlab.io/write-excel-file/)
 
-Also check [`read-excel-file`](https://gitlab.com/catamphetamine/read-excel-file).
+Also check [`read-excel-file`](https://www.npmjs.com/package/read-excel-file)
 
 ## Install
 
