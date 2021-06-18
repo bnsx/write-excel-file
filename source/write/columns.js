@@ -9,5 +9,5 @@ import generateColumnDescription from './column'
 export default function generateColumnsDescription(schema) {
   // `cols` format is described here:
   // https://msdn.microsoft.com/en-us/library/office/documentformat.openxml.spreadsheet.columns.aspx
-	return `<cols>${schema ? schema.map(generateColumnDescription).join('') : ''}</cols>`
+	return schema ? `<cols>${schema.map(generateColumnDescription).join('')}</cols>` : ''
 }
