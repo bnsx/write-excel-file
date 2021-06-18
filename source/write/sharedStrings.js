@@ -19,8 +19,8 @@ export default class SharedStrings {
 	}
 
 	add(string) {
-		const id = this.sharedStrings.length
-		this.sharedStringsIndex[string] = String(id)
+		const id = String(this.sharedStrings.length)
+		this.sharedStringsIndex[string] = id
 		this.sharedStrings.push(string)
 		return id
 	}

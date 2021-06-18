@@ -28,10 +28,14 @@ describe('generateCell()', () => {
 
   describe('Create a cell of type Number', () => {
     it('should create a cell', () => {
-      expect(generateCell(1, 1, 1000, Number)).to.equal('<c r="B1"><v>1000</v></c>')
+      expect(generateCell(1, 1, 1000, Number))
+        .to.equal('<c r="B1"><v>1000</v></c>')
     })
+
     it('should create a cell with a cell style ID', () => {
-      expect(generateCell(1, 1, 1000, Number, 123)).to.equal('<c r="B1" s="123"><v>1000</v></c>')
+      const cellStyleId = 123
+      expect(generateCell(1, 1, 1000, Number, cellStyleId))
+        .to.equal(`<c r="B1" s="${cellStyleId}"><v>1000</v></c>`)
     })
   })
 
@@ -67,9 +71,24 @@ describe('generateCell()', () => {
 
     it('should create a cell', () => {
       const sharedStrings = new SharedStrings()
-      expect(generateCell(1, 0, new Date(2020, 11, 30), Date, 123))
+      const cellStyleId = 123
+      expect(generateCell(1, 0, new Date(2020, 11, 30), Date, cellStyleId, sharedStrings))
         // .to.equal('<c r="B1" t="inlineStr"><is><t>example@domain.com</t></is></c>')
-        .to.equal('<c r="A1" s="123"><v>44194.875</v></c>')
+        .to.equal(`<c r="A1" s="${cellStyleId}"><v>44194.875</v></c>`)
+    })
+
+    it('should create an empty cell (`undefined`)', () => {
+      const sharedStrings = new SharedStrings()
+      const cellStyleId = 123
+      expect(generateCell(1, 0, undefined, Date, cellStyleId, sharedStrings))
+        .to.equal('')
+    })
+
+    it('should create an empty cell (`null`)', () => {
+      const sharedStrings = new SharedStrings()
+      const cellStyleId = 123
+      expect(generateCell(1, 0, null, Date, cellStyleId, sharedStrings))
+        .to.equal('')
     })
   })
 })
