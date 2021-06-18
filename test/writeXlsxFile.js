@@ -3,6 +3,12 @@
 const path = require('path')
 const fs = require('fs')
 
+const OUTPUT_DIRECTORY = path.join(__dirname, '..', 'test-output')
+
+if (!fs.existsSync(OUTPUT_DIRECTORY)) {
+  fs.mkdirSync(OUTPUT_DIRECTORY)
+}
+
 const writeXlsxFile = require('../source/write/writeXlsxFileNode').default
 
 const objects = [
@@ -86,10 +92,10 @@ const data = [
   ]
 ]
 
-writeXlsxFile(objects, { schema, filePath: path.join(__dirname, 'test-schema.xlsx') })
-writeXlsxFile(data, { filePath: path.join(__dirname, 'test-cells.xlsx') })
+writeXlsxFile(objects, { schema, filePath: path.join(OUTPUT_DIRECTORY, 'test-schema.xlsx') })
+writeXlsxFile(data, { filePath: path.join(OUTPUT_DIRECTORY, 'test-cells.xlsx') })
 
-const outputStream = fs.createWriteStream(path.join(__dirname, 'test-stream.xlsx'))
+const outputStream = fs.createWriteStream(path.join(OUTPUT_DIRECTORY, 'test-stream.xlsx'))
 writeXlsxFile(data).then((stream) => {
 	stream.pipe(outputStream)
 	stream.on('end', function () {
