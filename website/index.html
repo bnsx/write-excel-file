@@ -201,19 +201,24 @@
 
 		<br/>
 		<br/>
-
-
 		<br/>
 
 		<div class="supersection">
 			<div class="supersection-content">
 				<section>
 					<header>
-						<h1>Every cell data</h1>
+						<h1>Cell data</h1>
 						<button id="every-cell-data-edit">Edit</button>
 					</header>
 					<textarea id="every-cell-data" style="display: none"></textarea>
 					<pre><code class="language-js" id="every-cell-data-view"></code></pre>
+				</section>
+
+				<section>
+					<header>
+						<h1>Columns config</h1>
+					</header>
+					<pre><code class="language-js" id="every-cell-data-columns-view"></code></pre>
 				</section>
 			</div>
 
@@ -310,6 +315,13 @@
 			  }
 			]
 
+			const columns = [
+				{},
+				{ width: 14 },
+				{ width: 20 },
+				{}
+			]
+
 			document.getElementById('schema').value = `
 [
   {
@@ -383,6 +395,9 @@
 
 			document.getElementById('every-cell-data-view').innerHTML = document.getElementById('every-cell-data').value
 
+
+			document.getElementById('every-cell-data-columns-view').innerHTML = JSON.stringify(columns, null, 2)
+
 			document.getElementById('write-xlsx-file-button-schema').addEventListener('click', () => {
 				try {
 					const objects = JSON.parse(
@@ -431,7 +446,7 @@
 							}
 						}
 					}
-					writeXlsxFile(data, { fileName: 'cells.xlsx' })
+					writeXlsxFile(data, { columns, fileName: 'cells.xlsx' })
 				} catch (error) {
 					console.error(error)
 			  	alert("There was an error. See console output for the error stack trace.")
