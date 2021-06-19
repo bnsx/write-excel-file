@@ -2,9 +2,8 @@
 // https://github.com/davidramos-om/zipcelx-on-steroids/blob/master/src/formatters/rows/formatRow.js
 
 import generateCell from './cell'
-import { BOLD_FONT_WEIGHT_STYLE_ID } from './styles'
 
-import Integer from '../types/Integer'
+// import Integer from '../types/Integer'
 
 export default function generateRow(row, rowIndex, { getStyle, getSharedString }) {
 	// To ensure the row number starts as in Excel.
@@ -18,8 +17,8 @@ export default function generateRow(row, rowIndex, { getStyle, getSharedString }
 				align,
 				fontWeight
 			} = cell
-			if (format && type !== Date &&  type !== Number && type !== Integer) {
-				throw new Error('`format` can only be used on `Date`, `Number` or `Integer` cells')
+			if (format && type !== Date &&  type !== Number) { // && type !== Integer) {
+				throw new Error('`format` can only be used on `Date`, `Number` cells') // or `Integer` cells')
 			}
 			// if (fontWeight && type !== String) {
 			// 	throw new Error('`fontWeight` can only be used on `String` cells')
