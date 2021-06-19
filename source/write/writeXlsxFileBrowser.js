@@ -13,8 +13,8 @@ import generateWorksheet from './worksheet'
 import initStyles from './styles'
 import initSharedStrings from './sharedStrings'
 
-export default function writeXlsxFile(data, { fileName, schema } = {}) {
-  return generateXlsxFile(data, { schema }).then((blob) => {
+export default function writeXlsxFile(data, { fileName, schema, columns } = {}) {
+  return generateXlsxFile(data, { schema, columns }).then((blob) => {
     if (fileName) {
       return FileSaver.saveAs(blob, fileName)
     }
@@ -28,7 +28,7 @@ export default function writeXlsxFile(data, { fileName, schema } = {}) {
  * "The reason if you want to send the excel file or store it natively on Cordova/capacitor app".
  * @return {Blob}
  */
-function generateXlsxFile(data, { schema }) {
+function generateXlsxFile(data, { schema, columns }) {
   const zip = new JSZip()
 
   zip.file('_rels/.rels', rels)
@@ -36,7 +36,7 @@ function generateXlsxFile(data, { schema }) {
 
   const { getSharedStringsXml, getSharedString } = initSharedStrings()
   const { getStylesXml, getStyle } = initStyles()
-  const worksheet = generateWorksheet(data, { schema, getStyle, getSharedString })
+  const worksheet = generateWorksheet(data, { schema, columns, getStyle, getSharedString })
 
   const xl = zip.folder('xl')
   xl.file('workbook.xml', workbookXML)

@@ -1,6 +1,6 @@
-import Integer, { isInteger } from '../types/Integer'
-import URL, { isURL } from '../types/URL'
-import Email, { isEmail } from '../types/Email'
+// import Integer, { isInteger } from '../types/Integer'
+// import URL, { isURL } from '../types/URL'
+// import Email, { isEmail } from '../types/Email'
 
 import generateCellNumber from './generateCellNumber'
 import convertDateToExcelSerial from './convertDateToExcelSerial'
@@ -86,14 +86,14 @@ function getXlsxType(type) {
   //
   switch (type) {
     case String:
-    case Email:
-    case URL:
+    // case Email:
+    // case URL:
       return 's'
       // // "inlineStr" type is used instead of "s" to avoid creating a "shared strings" index.
       // return 'inlineStr'
 
     case Number:
-    case Integer:
+    // case Integer:
       // `n` is the default cell type (if no `t` has been specified).
       // return 'n'
       return
@@ -120,26 +120,25 @@ function getXlsxValue(type, value, getSharedString) {
   //
   switch (type) {
     case String:
-    case Email:
-    case URL:
-      if (type === Email && !isEmail(value)) {
-        throw new Error(`Invalid cell value: ${value}. Expected an Email`)
-      }
-      if (type === URL && !isURL(value)) {
-        throw new Error(`Invalid cell value: ${value}. Expected a URL`)
-      }
+    // case Email:
+    // case URL:
+      // if (type === Email && !isEmail(value)) {
+      //   throw new Error(`Invalid cell value: ${value}. Expected an Email`)
+      // }
+      // if (type === URL && !isURL(value)) {
+      //   throw new Error(`Invalid cell value: ${value}. Expected a URL`)
+      // }
       value = escapeString(value)
       return getSharedString(value)
-      return id
 
     case Number:
-    case Integer:
+    // case Integer:
       if (typeof value !== 'number') {
         throw new Error(`Invalid cell value: ${value}. Expected a number`)
       }
-      if (type === Integer && !isInteger(value)) {
-        throw new Error(`Invalid cell value: ${value}. Expected an Integer`)
-      }
+      // if (type === Integer && !isInteger(value)) {
+      //   throw new Error(`Invalid cell value: ${value}. Expected an Integer`)
+      // }
       return String(value)
 
     case Date:

@@ -3,9 +3,9 @@
 
 import generateCell from './cell'
 
-import Integer from '../types/Integer'
-import Email from '../types/Email'
-import URL from '../types/URL'
+// import Integer from '../types/Integer'
+// import Email from '../types/Email'
+// import URL from '../types/URL'
 
 describe('generateCell()', () => {
   describe('Create a cell of type Sting', () => {
@@ -35,27 +35,27 @@ describe('generateCell()', () => {
     })
   })
 
-  describe('Create a cell of type Integer', () => {
-    it('Create a cell', () => {
-      expect(generateCell(1, 1, 1000, Integer)).to.equal('<c r="B1"><v>1000</v></c>')
-    })
-  })
+  // describe('Create a cell of type Integer', () => {
+  //   it('Create a cell', () => {
+  //     expect(generateCell(1, 1, 1000, Integer)).to.equal('<c r="B1"><v>1000</v></c>')
+  //   })
+  // })
 
-  describe('Create a cell of type URL', () => {
-    it('should create a cell', () => {
-      expect(generateCell(1, 1, 'https://google.com', URL, undefined, () => 0))
-        // .to.equal('<c r="B1" t="inlineStr"><is><t>https://google.com</t></is></c>')
-        .to.equal('<c r="B1" t="s"><v>0</v></c>')
-    })
-  })
+  // describe('Create a cell of type URL', () => {
+  //   it('should create a cell', () => {
+  //     expect(generateCell(1, 1, 'https://google.com', URL, undefined, () => 0))
+  //       // .to.equal('<c r="B1" t="inlineStr"><is><t>https://google.com</t></is></c>')
+  //       .to.equal('<c r="B1" t="s"><v>0</v></c>')
+  //   })
+  // })
 
-  describe('Create a cell of type Email', () => {
-    it('should create a cell', () => {
-      expect(generateCell(1, 1, 'example@domain.com', Email, undefined, () => 0))
-        // .to.equal('<c r="B1" t="inlineStr"><is><t>example@domain.com</t></is></c>')
-        .to.equal('<c r="B1" t="s"><v>0</v></c>')
-    })
-  })
+  // describe('Create a cell of type Email', () => {
+  //   it('should create a cell', () => {
+  //     expect(generateCell(1, 1, 'example@domain.com', Email, undefined, () => 0))
+  //       // .to.equal('<c r="B1" t="inlineStr"><is><t>example@domain.com</t></is></c>')
+  //       .to.equal('<c r="B1" t="s"><v>0</v></c>')
+  //   })
+  // })
 
   describe('Create a cell of type Date', () => {
     it('should throw if no date format was supplied', () => {

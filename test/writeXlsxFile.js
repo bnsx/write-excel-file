@@ -97,11 +97,18 @@ const data = [
   ]
 ]
 
+const columns = [
+  {},
+  { width: 14 },
+  { width: 20 }
+  // Fourth column missing intentionally
+]
+
 writeXlsxFile(objects, { schema, filePath: path.join(OUTPUT_DIRECTORY, 'test-schema.xlsx') })
-writeXlsxFile(data, { filePath: path.join(OUTPUT_DIRECTORY, 'test-cells.xlsx') })
+writeXlsxFile(data, { columns, filePath: path.join(OUTPUT_DIRECTORY, 'test-cells.xlsx') })
 
 const outputStream = fs.createWriteStream(path.join(OUTPUT_DIRECTORY, 'test-stream.xlsx'))
-writeXlsxFile(data).then((stream) => {
+writeXlsxFile(data, { columns }).then((stream) => {
 	stream.pipe(outputStream)
 	stream.on('end', function () {
 	  console.log('XLSX file stream ended')
