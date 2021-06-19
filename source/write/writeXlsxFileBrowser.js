@@ -34,9 +34,9 @@ function generateXlsxFile(data, { schema }) {
   zip.file('_rels/.rels', rels)
   zip.file('[Content_Types].xml', contentTypes)
 
-  const { getSharedStringsXml, getSharedStirng } = initSharedStrings()
+  const { getSharedStringsXml, getSharedString } = initSharedStrings()
   const { getStylesXml, getStyle } = initStyles()
-  const worksheet = generateWorksheet(data, { schema, getStyle, getSharedStirng })
+  const worksheet = generateWorksheet(data, { schema, getStyle, getSharedString })
 
   const xl = zip.folder('xl')
   xl.file('workbook.xml', workbookXML)
