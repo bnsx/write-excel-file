@@ -150,6 +150,40 @@ Aside from having a `type` and a `value`, each cell (or schema column) can also 
 
 * `align: string` — Can be used to align cell content horizontally. Available values: `"left"`, `"center"`, `"right"`.
 
+### Column Title
+
+#### Schema
+
+When using a `schema`, column title can be set via a `column` property. It will be printed at the top of the table in bold.
+
+```js
+const schema = [
+  // Column #1
+  {
+    column: 'Name', // Column title
+    value: student => student.name
+  },
+  ...
+]
+```
+
+If `column` property is missing then column title won't be printed.
+
+#### Cell Data
+
+When not using a schema, one can print column titles by supplying them as the first row of the `data`:
+
+```js
+const data = [
+  [
+    { value: 'Name', fontWeight: 'bold' },
+    { value: 'Age', fontWeight: 'bold'},
+    ...
+  ],
+  ...
+]
+```
+
 ### Column Width
 
 Column width can also be specified (in "characters").
@@ -163,7 +197,6 @@ const schema = [
   // Column #1
   {
     column: 'Name',
-    type: String,
     value: student => student.name,
     width: 20 // Column width (in characters).
   },
@@ -173,7 +206,7 @@ const schema = [
 
 #### Cell Data
 
-When not using a schema, one can provide a `columns` parameter to specify a width of a column:
+When not using a schema, one can provide a separate `columns` parameter to specify column widths:
 
 ```js
 // Set Column #3 width to "20 characters".
@@ -184,6 +217,8 @@ const columns = [
   {}
 ]
 ```
+
+## API
 
 ### Browser
 
