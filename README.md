@@ -146,7 +146,9 @@ Each column or cell, aside from having `type` and `value`, can also have:
   * `"#,##0.00"` for printing currency.
   * `"mm/dd/yy"` for formatting a date (all `Date` cells or columns require a `format`).
 
-* `fontWeight: string` — Can be used to print text in bold. Can only be used on `String` cells. Example: `"bold"`.
+* `fontWeight: string` — Can be used to print text in bold. Available values: `"bold"`.
+
+* `align: string` — Can be used to align cell content horizontally. Available values: `"left"`, `"center"`, `"right"`.
 
 ### Browser
 

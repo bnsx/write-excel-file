@@ -3,11 +3,12 @@
 
 import generateRow from './row'
 
-export default function generateRows(data, { schema, formatStyles, sharedStrings }) {
+export default function generateRows(data, { schema, getStyle, getSharedString }) {
 	if (schema) {
 		data = [schema.map((column) => ({
 			type: String,
 			fontWeight: 'bold',
+			align: column.align,
 			value: column.column
 		}))].concat(data.map((row) => schema.map(
 			(column) => ({
@@ -16,5 +17,5 @@ export default function generateRows(data, { schema, formatStyles, sharedStrings
 			})
 		)))
 	}
-	return data.map((row, index) => generateRow(row, index, { formatStyles, sharedStrings })).join('')
+	return data.map((row, index) => generateRow(row, index, { getStyle, getSharedString })).join('')
 }

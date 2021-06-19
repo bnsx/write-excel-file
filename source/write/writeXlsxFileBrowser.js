@@ -10,8 +10,8 @@ import rels from './statics/rels'
 import contentTypes from './statics/[Content_Types].xml'
 
 import generateWorksheet from './worksheet'
-import generateStyles from './styles'
-import SharedStrings from './sharedStrings'
+import initStyles from './styles'
+import initSharedStrings from './sharedStrings'
 
 export default function writeXlsxFile(data, { fileName, schema } = {}) {
   return generateXlsxFile(data, { schema }).then((blob) => {
@@ -34,14 +34,14 @@ function generateXlsxFile(data, { schema }) {
   zip.file('_rels/.rels', rels)
   zip.file('[Content_Types].xml', contentTypes)
 
-  const sharedStrings = new SharedStrings()
-  const { styles, formatStyles } = generateStyles(data, { schema })
-  const worksheet = generateWorksheet(data, { schema, formatStyles, sharedStrings })
+  const { getSharedStringsXml, getSharedStirng } = initSharedStrings()
+  const { getStylesXml, getStyle } = initStyles()
+  const worksheet = generateWorksheet(data, { schema, getStyle, getSharedStirng })
 
   const xl = zip.folder('xl')
   xl.file('workbook.xml', workbookXML)
-  xl.file('styles.xml', styles)
-  xl.file('sharedStrings.xml', sharedStrings.getXml())
+  xl.file('styles.xml', getStylesXml())
+  xl.file('sharedStrings.xml', getSharedStringsXml())
   xl.file('_rels/workbook.xml.rels', workbookXMLRels)
   xl.file('worksheets/sheet1.xml', worksheet)
 

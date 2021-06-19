@@ -31,11 +31,13 @@ const schema = [
     column: 'Name',
     type: String,
     value: student => student.name,
+    align: 'right',
     width: 20
   },
   {
     column: 'Age',
     type: Number,
+    align: 'center',
     value: student => student.age
   },
   {
@@ -55,7 +57,9 @@ const data = [
   [
     {
       value: 18,
-      type: Number
+      type: Number,
+      align: 'center',
+      fontWeight: 'bold'
     },
     {
       value: new Date(),
@@ -74,7 +78,8 @@ const data = [
   [
     {
       value: 16,
-      type: Number
+      type: Number,
+      align: 'right'
     },
     {
       value: new Date(),

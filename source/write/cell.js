@@ -11,7 +11,7 @@ export default function generateCell(
   value,
   type,
   cellStyleId,
-  sharedStrings
+  getSharedString
 ) {
   if (isEmpty(value)) {
     return ''
@@ -31,7 +31,7 @@ export default function generateCell(
   }
 
   // if (!isEmpty(value)) {
-    value = getXlsxValue(type, value, sharedStrings)
+    value = getXlsxValue(type, value, getSharedString)
   // }
   type = getXlsxType(type)
 
@@ -41,6 +41,7 @@ export default function generateCell(
   // `2` — 0.00
   // `3` —  #,##0
   if (cellStyleId) {
+    // From the attribute s="12" we know that the cell's formatting is stored at the 13th (zero-based index) <xf> within the <cellXfs>
     cellStyle = ` s="${cellStyleId}"`
   }
 
@@ -110,7 +111,7 @@ function getXlsxType(type) {
   }
 }
 
-function getXlsxValue(type, value, sharedStrings) {
+function getXlsxValue(type, value, getSharedString) {
   // Available Excel cell types:
   // https://github.com/SheetJS/sheetjs/blob/19620da30be2a7d7b9801938a0b9b1fd3c4c4b00/docbits/52_datatype.md
   //
@@ -128,10 +129,7 @@ function getXlsxValue(type, value, sharedStrings) {
         throw new Error(`Invalid cell value: ${value}. Expected a URL`)
       }
       value = escapeString(value)
-      let id = sharedStrings.get(value)
-      if (id === undefined) {
-        id = sharedStrings.add(value)
-      }
+      return getSharedString(value)
       return id
 
     case Number:

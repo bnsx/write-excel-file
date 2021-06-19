@@ -7,8 +7,6 @@ import Integer from '../types/Integer'
 import Email from '../types/Email'
 import URL from '../types/URL'
 
-import SharedStrings from './sharedStrings'
-
 describe('generateCell()', () => {
   describe('Create a cell of type Sting', () => {
     it('should throw if invalid type was supplied', () => {
@@ -17,12 +15,10 @@ describe('generateCell()', () => {
     })
 
     it('should create a cell', () => {
-      const sharedStrings = new SharedStrings()
-      expect(generateCell(1, 0, 'Test', String, undefined, sharedStrings)).to.equal(
+      expect(generateCell(1, 0, 'Test', String, undefined, () => 0)).to.equal(
         // '<c r="A1" t="inlineStr"><is><t>Test</t></is></c>'
         '<c r="A1" t="s"><v>0</v></c>'
       )
-      expect(sharedStrings.sharedStrings).to.deep.equal(['Test'])
     })
   })
 
@@ -47,8 +43,7 @@ describe('generateCell()', () => {
 
   describe('Create a cell of type URL', () => {
     it('should create a cell', () => {
-      const sharedStrings = new SharedStrings()
-      expect(generateCell(1, 1, 'https://google.com', URL, undefined, sharedStrings))
+      expect(generateCell(1, 1, 'https://google.com', URL, undefined, () => 0))
         // .to.equal('<c r="B1" t="inlineStr"><is><t>https://google.com</t></is></c>')
         .to.equal('<c r="B1" t="s"><v>0</v></c>')
     })
@@ -56,8 +51,7 @@ describe('generateCell()', () => {
 
   describe('Create a cell of type Email', () => {
     it('should create a cell', () => {
-      const sharedStrings = new SharedStrings()
-      expect(generateCell(1, 1, 'example@domain.com', Email, undefined, sharedStrings))
+      expect(generateCell(1, 1, 'example@domain.com', Email, undefined, () => 0))
         // .to.equal('<c r="B1" t="inlineStr"><is><t>example@domain.com</t></is></c>')
         .to.equal('<c r="B1" t="s"><v>0</v></c>')
     })
@@ -70,24 +64,21 @@ describe('generateCell()', () => {
     })
 
     it('should create a cell', () => {
-      const sharedStrings = new SharedStrings()
       const cellStyleId = 123
-      expect(generateCell(1, 0, new Date(2020, 11, 30), Date, cellStyleId, sharedStrings))
+      expect(generateCell(1, 0, new Date(2020, 11, 30), Date, cellStyleId, () => 0))
         // .to.equal('<c r="B1" t="inlineStr"><is><t>example@domain.com</t></is></c>')
         .to.equal(`<c r="A1" s="${cellStyleId}"><v>44194.875</v></c>`)
     })
 
     it('should create an empty cell (`undefined`)', () => {
-      const sharedStrings = new SharedStrings()
       const cellStyleId = 123
-      expect(generateCell(1, 0, undefined, Date, cellStyleId, sharedStrings))
+      expect(generateCell(1, 0, undefined, Date, cellStyleId, () => 0))
         .to.equal('')
     })
 
     it('should create an empty cell (`null`)', () => {
-      const sharedStrings = new SharedStrings()
       const cellStyleId = 123
-      expect(generateCell(1, 0, null, Date, cellStyleId, sharedStrings))
+      expect(generateCell(1, 0, null, Date, cellStyleId, () => 0))
         .to.equal('')
     })
   })
