@@ -4,7 +4,7 @@ Write simple `*.xlsx` files in a browser or Node.js
 
 [Demo](https://catamphetamine.gitlab.io/write-excel-file/)
 
-Also check [`read-excel-file`](https://www.npmjs.com/package/read-excel-file)
+Also check out [`read-excel-file`](https://www.npmjs.com/package/read-excel-file) for reading small to medium `*.xlsx` files.
 
 ## Install
 
