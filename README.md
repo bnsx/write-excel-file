@@ -184,7 +184,7 @@ Aside from having a `type` and a `value`, each cell (or schema column) can also 
   * `#,##0.00` — Currency, as in most English-speaking countries. Example: `1,234.50`.
   * `0%` — Percents. Example: `30%`.
   * `0.00%` — Percents with 2 decimal places. Example: `30.00%`.
-  * All `Date` cells (or schema columns) require a `format`:
+  * All `Date` cells (or schema columns) require a `format` (unless the [default `dateFormat`](#date-format) is set):
 
     * `mm/dd/yy` — US date format. Example: `12/31/00` for December 31, 2000.
     * `mmm d yyyy` — Example: `Dec 31 2000`.
@@ -348,6 +348,17 @@ await writeXlsxFile(data, {
   filePath: '/path/to/file.xlsx',
   fontFamily: 'Arial',
   fontSize: 16
+})
+```
+
+## Date Format
+
+To set the default date format, pass `dateFormat` parameter when calling `writeXlsxFile()`:
+
+```js
+await writeXlsxFile(data, {
+  filePath: '/path/to/file.xlsx',
+  dateFormat: 'mm/dd/yyyy'
 })
 ```
 

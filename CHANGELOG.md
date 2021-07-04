@@ -1,3 +1,8 @@
+1.1.2 / 04.07.2021
+==================
+
+* Added a global `dateFormat` configuration parameter (when using a `schema`).
+
 1.1.1 / 24.06.2021
 ==================
 

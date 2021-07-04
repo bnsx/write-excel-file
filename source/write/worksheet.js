@@ -17,7 +17,8 @@ export default function generateWorksheet(data, {
 	headerStyle,
 	getStyle,
 	getSharedString,
-	customFont
+	customFont,
+	dateFormat
 }) {
 	if (schema) {
 		if (!Array.isArray(data)) {
@@ -39,7 +40,8 @@ export default function generateWorksheet(data, {
   		headerStyle,
   		getStyle,
   		getSharedString,
-  		customFont
+  		customFont,
+  		dateFormat
   	}))
   	.replace('{columnsDescription}', generateColumnsDescription({ schema, columns }))
 }

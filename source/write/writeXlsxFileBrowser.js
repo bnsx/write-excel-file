@@ -33,7 +33,8 @@ function generateXlsxFile(data, {
   columns,
   headerStyle,
   fontFamily,
-  fontSize
+  fontSize,
+  dateFormat
 }) {
   const zip = new JSZip()
 
@@ -49,7 +50,8 @@ function generateXlsxFile(data, {
     headerStyle,
     getStyle,
     getSharedString,
-    customFont: fontFamily || fontSize
+    customFont: fontFamily || fontSize,
+    dateFormat
   })
 
   const xl = zip.folder('xl')

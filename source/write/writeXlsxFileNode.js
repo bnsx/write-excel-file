@@ -19,7 +19,8 @@ export default async function writeXlsxFile(data, {
 	columns,
 	headerStyle,
 	fontFamily,
-	fontSize
+	fontSize,
+	dateFormat
 } = {}) {
 	const archive = new Archive(filePath)
 
@@ -32,7 +33,8 @@ export default async function writeXlsxFile(data, {
 		headerStyle,
 		getStyle,
 		getSharedString,
-		customFont: fontFamily || fontSize
+		customFont: fontFamily || fontSize,
+		dateFormat
 	})
 
 	// There doesn't seem to be a way to just append a file into a subdirectory
