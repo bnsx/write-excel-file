@@ -28,6 +28,9 @@ export default function initStyles({
   const fills = []
   const fillsIndex = {}
 
+  const borders = []
+  const bordersIndex = {}
+
   // Default font.
   fonts.push({
     size: fontSize,
@@ -39,6 +42,10 @@ export default function initStyles({
   fills.push({})
   fillsIndex['-'] = 0
 
+  // Default border.
+  borders.push({})
+  bordersIndex['-'] = 0
+
   // "gray125" fill.
   // For some weird reason, MS Office 2007 Excel seems to require that to be present.
   // Otherwise, if absent, it would replace the first `backgroundColor`.
@@ -47,10 +54,13 @@ export default function initStyles({
   })
 
   function getStyle({ fontWeight, align, alignVertical, format, wrap, color, backgroundColor }) {
+    // Custom borders aren't supported.
+    const border = undefined
     // Look for an existing style.
     const fontKey = `${fontWeight || '-'}/${color || '-'}`
     const fillKey = backgroundColor || '-'
-    const key = `${align || '-'}/${alignVertical || '-'}/${format || '-'}/${wrap || '-'}/${fontKey}/${fillKey}`
+    const borderKey = border ? JSON.stringify(border) : '-'
+    const key = `${align || '-'}/${alignVertical || '-'}/${format || '-'}/${wrap || '-'}/${fontKey}/${fillKey}/${borderKey}`
     const styleId = stylesIndex[key]
     if (styleId !== undefined) {
       return styleId
@@ -90,10 +100,20 @@ export default function initStyles({
         })
       }
     }
+    // Get border ID.
+    let borderId
+    if (border) {
+      borderId = bordersIndex[borderKey]
+      if (borderId === undefined) {
+        borderId = bordersIndex[borderKey] = String(borders.length)
+        borders.push(border)
+      }
+    }
     // Add a style.
     styles.push({
       fontId,
       fillId,
+      borderId,
       align,
       alignVertical,
       wrap,
@@ -107,13 +127,13 @@ export default function initStyles({
 
   return {
     getStylesXml() {
-      return generateXml({ formats, styles, fonts, fills })
+      return generateXml({ formats, styles, fonts, fills, borders })
     },
     getStyle
   }
 }
 
-function generateXml({ formats, styles, fonts, fills }) {
+function generateXml({ formats, styles, fonts, fills, borders }) {
   let xml = '<?xml version="1.0" ?>'
   xml += '<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">'
 
@@ -185,8 +205,16 @@ function generateXml({ formats, styles, fonts, fills }) {
 
   // MS Office 2007 Excel seems to require a `<borders/>` element to exist:
   // without it, MS Office 2007 Excel thinks that the file is broken.
-  xml += '<borders count="1">'
-  xml += '<border><left/><right/><top/><bottom/><diagonal/></border>'
+  xml += `<borders count="${borders.length}">`
+  for (const border of borders) {
+    xml += '<border>'
+    xml += '<left/>'
+    xml += '<right/>'
+    xml += '<top/>'
+    xml += '<bottom/>'
+    xml += '<diagonal/>'
+    xml += '</border>'
+  }
   xml += '</borders>'
 
   // What are `<cellXfs/>` and `<cellStyleXfs/>`:
@@ -217,6 +245,7 @@ function generateXml({ formats, styles, fonts, fills }) {
     const {
       fontId,
       fillId,
+      borderId,
       align,
       alignVertical,
       wrap,
@@ -233,8 +262,9 @@ function generateXml({ formats, styles, fonts, fills }) {
         fontId !== undefined ? 'applyFont="1"' : undefined,
         fillId !== undefined ? `fillId="${fillId}"` : undefined,
         fillId !== undefined ? 'applyFill="1"' : undefined,
+        borderId !== undefined ? `borderId="${borderId}"` : undefined,
+        borderId !== undefined ? 'applyBorder="1"' : undefined,
         align || alignVertical || wrap ? 'applyAlignment="1"' : undefined,
-        // 'borderId="0"',
         // 'xfId="0"'
       ].filter(_ => _).join(' ') +
     '>' +
