@@ -362,6 +362,38 @@ await writeXlsxFile(data, {
 })
 ```
 
+## Multiple Sheets
+
+#### Schema
+
+To generate an `*.xlsx` file with multiple sheets:
+
+* Pass a `sheets` parameter — an array of sheet names.
+* The `objects` argument should be an array of `objects` for each sheet.
+* The `schema` parameter should be an array of `schema`s for each sheet.
+
+```js
+await writeXlsxFile([objects1, objects2], {
+  schema: [schema1, schema2],
+  sheets: ['Sheet 1', 'Sheet 2'],
+  filePath: '/path/to/file.xlsx'
+})
+```
+
+#### Cell Data
+
+To generate an `*.xlsx` file with multiple sheets:
+
+* Pass a `sheets` parameter — an array of sheet names.
+* The `data` argument should be an array of `data` for each sheet.
+
+```js
+await writeXlsxFile([data1, data2], {
+  sheets: ['Sheet 1', 'Sheet 2'],
+  filePath: '/path/to/file.xlsx'
+})
+```
+
 ## TypeScript
 
 Not implemented. I'm not familiar with TypeScript.

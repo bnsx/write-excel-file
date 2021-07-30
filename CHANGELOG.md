@@ -1,3 +1,8 @@
+1.2.0 / 30.07.2021
+==================
+
+* Added support for generating `*.xlsx` files with multiple sheets.
+
 1.1.2 / 04.07.2021
 ==================
 
