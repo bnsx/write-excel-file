@@ -8,6 +8,7 @@ import generateCell from './cell'
 export default function generateRow(row, rowIndex, { getStyle, getSharedString, customFont }) {
 	// To ensure the row number starts as in Excel.
 	const rowNumber = rowIndex + 1
+	let rowHeight
 	const rowCells = row
 		.map((cell, columnIndex) => {
 			const {
@@ -17,6 +18,7 @@ export default function generateRow(row, rowIndex, { getStyle, getSharedString, 
 				align,
 				alignVertical,
 				fontWeight,
+				height,
 				wrap,
 				color,
 				backgroundColor
@@ -28,6 +30,11 @@ export default function generateRow(row, rowIndex, { getStyle, getSharedString, 
 			if (fontWeight || align || alignVertical || format || wrap || color || backgroundColor || customFont) {
 				cellStyleId = getStyle({ fontWeight, align, alignVertical, format, wrap, color, backgroundColor })
 			}
+			if (height) {
+				if (rowHeight === undefined || rowHeight < height) {
+					rowHeight = height
+				}
+			}
 			return generateCell(
 				rowNumber,
 				columnIndex,
@@ -38,5 +45,10 @@ export default function generateRow(row, rowIndex, { getStyle, getSharedString, 
 			)
 		})
 		.join('')
-	return `<row r="${rowNumber}">${rowCells}</row>`
+
+	return `<row r="${rowNumber}"` +
+		(rowHeight ? ` ht="${rowHeight}" customHeight="1"` : '') +
+		'>' +
+		rowCells +
+		'</row>'
 }

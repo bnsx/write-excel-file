@@ -79,7 +79,8 @@ describe('writeXlsxFile', function() {
         },
         {
           value: 'Date of Birth',
-          fontWeight: 'bold'
+          fontWeight: 'bold',
+          height: 48
         },
         {
           value: 'Name',
