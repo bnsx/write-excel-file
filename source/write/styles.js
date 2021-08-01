@@ -58,7 +58,7 @@ export default function initStyles({
     gray125: true
   })
 
-  function getStyle({
+  function getStyle(
     fontWeight,
     align,
     alignVertical,
@@ -76,7 +76,7 @@ export default function initStyles({
     topBorderStyle,
     bottomBorderColor,
     bottomBorderStyle,
-  }) {
+  ) {
     // Custom borders aren't supported.
     const border = undefined
     // Look for an existing style.
@@ -181,7 +181,7 @@ export default function initStyles({
   }
 
   // Add the default style.
-  getStyle({})
+  getStyle()
 
   return {
     getStylesXml() {

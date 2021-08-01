@@ -57,7 +57,7 @@ export default function generateRow(row, rowIndex, { getStyle, getSharedString, 
 				bottomBorderStyle ||
 				customFont
 			) {
-				cellStyleId = getStyle({
+				cellStyleId = getStyle(
 					fontWeight,
 					align,
 					alignVertical,
@@ -75,7 +75,7 @@ export default function generateRow(row, rowIndex, { getStyle, getSharedString, 
 					topBorderStyle,
 					bottomBorderColor,
 					bottomBorderStyle
-				})
+				)
 			}
 			if (height) {
 				if (rowHeight === undefined || rowHeight < height) {
