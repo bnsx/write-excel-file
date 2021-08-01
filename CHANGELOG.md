@@ -5,6 +5,8 @@
 
 * Added column `span` and `rowSpan` options.
 
+* Added `borderColor` and `borderStyle` options. Also the options for top / left / bottom / right border.
+
 1.2.0 / 30.07.2021
 ==================
 

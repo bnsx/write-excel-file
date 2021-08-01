@@ -176,6 +176,19 @@ Aside from having a `type` and a `value`, each cell (or schema column) can also 
 
 * `backgroundColor: string` — Cell background color (in hexademical format). Example: `"#aabbcc"`.
 
+* `borderColor: string` — Cell border color. Example: `"#aabbcc"`.
+
+* `borderStyle: string` — Cell border style. Example: `"thick"`.
+
+  * `leftBorderColor`
+  * `leftBorderStyle`
+  * `rightBorderColor`
+  * `rightBorderStyle`
+  * `topBorderColor`
+  * `topBorderStyle`
+  * `bottomBorderColor`
+  * `bottomBorderStyle`
+
 <!-- * `width: number` — Approximate column width (in characters). Example: `20`. -->
 
 <!--

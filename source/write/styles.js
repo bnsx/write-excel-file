@@ -36,15 +36,20 @@ export default function initStyles({
     size: fontSize,
     family: fontFamily
   })
-  fontsIndex['-/-'] = 0
+  fontsIndex['-:-'] = 0
 
   // Default fill.
   fills.push({})
   fillsIndex['-'] = 0
 
   // Default border.
-  borders.push({})
-  bordersIndex['-'] = 0
+  borders.push({
+    left: {},
+    right: {},
+    top: {},
+    bottom: {}
+  })
+  bordersIndex['-:-/-:-/-:-/-:-'] = 0
 
   // "gray125" fill.
   // For some weird reason, MS Office 2007 Excel seems to require that to be present.
@@ -53,13 +58,38 @@ export default function initStyles({
     gray125: true
   })
 
-  function getStyle({ fontWeight, align, alignVertical, format, wrap, color, backgroundColor }) {
+  function getStyle({
+    fontWeight,
+    align,
+    alignVertical,
+    format,
+    wrap,
+    color,
+    backgroundColor,
+    borderColor,
+    borderStyle,
+    leftBorderColor,
+    leftBorderStyle,
+    rightBorderColor,
+    rightBorderStyle,
+    topBorderColor,
+    topBorderStyle,
+    bottomBorderColor,
+    bottomBorderStyle,
+  }) {
     // Custom borders aren't supported.
     const border = undefined
     // Look for an existing style.
-    const fontKey = `${fontWeight || '-'}/${color || '-'}`
+    const fontKey = `${fontWeight || '-'}:${color || '-'}`
     const fillKey = backgroundColor || '-'
-    const borderKey = border ? JSON.stringify(border) : '-'
+    const borderKey =
+      `${(topBorderColor || borderColor) || '-'}:${(topBorderStyle || borderStyle) || '-'}` +
+      '/' +
+      `${(rightBorderColor || borderColor) || '-'}:${(rightBorderStyle || borderStyle) || '-'}` +
+      '/' +
+      `${(bottomBorderColor || borderColor) || '-'}:${(bottomBorderStyle || borderStyle) || '-'}` +
+      '/' +
+      `${(leftBorderColor || borderColor) || '-'}:${(leftBorderStyle || borderStyle) || '-'}`
     const key = `${align || '-'}/${alignVertical || '-'}/${format || '-'}/${wrap || '-'}/${fontKey}/${fillKey}/${borderKey}`
     const styleId = stylesIndex[key]
     if (styleId !== undefined) {
@@ -102,11 +132,39 @@ export default function initStyles({
     }
     // Get border ID.
     let borderId
-    if (border) {
+    if (
+      borderColor ||
+      borderStyle ||
+      leftBorderColor ||
+      leftBorderStyle ||
+      rightBorderColor ||
+      rightBorderStyle ||
+      topBorderColor ||
+      topBorderStyle ||
+      bottomBorderColor ||
+      bottomBorderStyle
+    ) {
       borderId = bordersIndex[borderKey]
       if (borderId === undefined) {
         borderId = bordersIndex[borderKey] = String(borders.length)
-        borders.push(border)
+        borders.push({
+          left: {
+            style: leftBorderStyle || borderStyle,
+            color: leftBorderColor || borderColor
+          },
+          right: {
+            style: rightBorderStyle || borderStyle,
+            color: rightBorderColor || borderColor
+          },
+          top: {
+            style: topBorderStyle || borderStyle,
+            color: topBorderColor || borderColor
+          },
+          bottom: {
+            style: bottomBorderStyle || borderStyle,
+            color: bottomBorderColor || borderColor
+          }
+        })
       }
     }
     // Add a style.
@@ -207,11 +265,28 @@ function generateXml({ formats, styles, fonts, fills, borders }) {
   // without it, MS Office 2007 Excel thinks that the file is broken.
   xml += `<borders count="${borders.length}">`
   for (const border of borders) {
+    const {
+      left,
+      right,
+      top,
+      bottom
+    } = border
+    const getBorderXml = (direction, { style, color }) => {
+      if (color && !style) {
+        style = 'thin'
+      }
+      const hasChildren = color ? true : false
+      return `<${direction}` +
+        (style ? ` style="${style}"` : '') +
+        (hasChildren ? '>' : '/>') +
+        (color ? `<color rgb="${getColor(color)}"/>` : '') +
+        (hasChildren ? `</${direction}>` : '')
+    }
     xml += '<border>'
-    xml += '<left/>'
-    xml += '<right/>'
-    xml += '<top/>'
-    xml += '<bottom/>'
+    xml += getBorderXml('left', left)
+    xml += getBorderXml('right', right)
+    xml += getBorderXml('top', top)
+    xml += getBorderXml('bottom', bottom)
     xml += '<diagonal/>'
     xml += '</border>'
   }

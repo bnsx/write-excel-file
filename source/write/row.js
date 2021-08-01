@@ -21,14 +21,61 @@ export default function generateRow(row, rowIndex, { getStyle, getSharedString, 
 				height,
 				wrap,
 				color,
-				backgroundColor
+				backgroundColor,
+				borderColor,
+				borderStyle,
+				leftBorderColor,
+				leftBorderStyle,
+				rightBorderColor,
+				rightBorderStyle,
+				topBorderColor,
+				topBorderStyle,
+				bottomBorderColor,
+				bottomBorderStyle
 			} = cell
 			if (format && type !== Date &&  type !== Number) { // && type !== Integer) {
 				throw new Error('`format` can only be used on `Date`, `Number` cells') // or `Integer` cells')
 			}
 			let cellStyleId
-			if (fontWeight || align || alignVertical || format || wrap || color || backgroundColor || customFont) {
-				cellStyleId = getStyle({ fontWeight, align, alignVertical, format, wrap, color, backgroundColor })
+			if (
+				fontWeight ||
+				align ||
+				alignVertical ||
+				format ||
+				wrap ||
+				color ||
+				backgroundColor ||
+				borderColor ||
+				borderStyle ||
+				leftBorderColor ||
+				leftBorderStyle ||
+				rightBorderColor ||
+				rightBorderStyle ||
+				topBorderColor ||
+				topBorderStyle ||
+				bottomBorderColor ||
+				bottomBorderStyle ||
+				customFont
+			) {
+				cellStyleId = getStyle({
+					fontWeight,
+					align,
+					alignVertical,
+					format,
+					wrap,
+					color,
+					backgroundColor,
+					borderColor,
+					borderStyle,
+					leftBorderColor,
+					leftBorderStyle,
+					rightBorderColor,
+					rightBorderStyle,
+					topBorderColor,
+					topBorderStyle,
+					bottomBorderColor,
+					bottomBorderStyle
+				})
 			}
 			if (height) {
 				if (rowHeight === undefined || rowHeight < height) {
