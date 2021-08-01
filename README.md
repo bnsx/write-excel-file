@@ -164,9 +164,9 @@ Aside from having a `type` and a `value`, each cell (or schema column) can also 
 
 * `height: number` — Row height, in "points".
 
-* `span: number` — Column span.
+* `span: number` — Column span. Even if a cell spans several columns, you still have to provide a value for every cell in every row and column.
 
-* `rowSpan: number` — Row span.
+* `rowSpan: number` — Row span. Even if a cell spans several rows, you still have to provide a value for every cell in every row and column.
 
 * `wrap: boolean` — Set to `true` to ["wrap"](https://www.excel-easy.com/examples/wrap-text.html) text when it overflows the cell.
 
