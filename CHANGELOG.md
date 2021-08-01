@@ -3,6 +3,8 @@
 
 * Added row height option.
 
+* Added column `span` and `rowSpan` options.
+
 1.2.0 / 30.07.2021
 ==================
 

@@ -164,6 +164,10 @@ Aside from having a `type` and a `value`, each cell (or schema column) can also 
 
 * `height: number` — Row height, in "points".
 
+* `span: number` — Column span.
+
+* `rowSpan: number` — Row span.
+
 * `wrap: boolean` — Set to `true` to ["wrap"](https://www.excel-easy.com/examples/wrap-text.html) text when it overflows the cell.
 
 * `fontWeight: string` — Can be used to print text in bold. Available values: `"bold"`.
