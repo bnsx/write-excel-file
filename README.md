@@ -253,7 +253,7 @@ If `fileName` parameter is not passed then the returned `Promise` resolves to a 
 ### Node.js
 
 ```js
-const { writeXlsxFile } = require('write-excel-file/node')
+const writeXlsxFile = require('write-excel-file/node')
 
 // When passing `data` for each cell.
 await writeXlsxFile(data, {
