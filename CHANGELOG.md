@@ -1,3 +1,8 @@
+1.3.3 / 04.08.2021
+==================
+
+* [Fixed](https://gitlab.com/catamphetamine/write-excel-file/-/issues/1) escaping quotes.
+
 1.3.0 / 01.08.2021
 ==================
 
