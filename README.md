@@ -417,7 +417,7 @@ await writeXlsxFile([data1, data2], {
 
 ## TypeScript
 
-Not implemented. I'm not familiar with TypeScript.
+This library comes with TypeScript "typings". If you happen to find any bugs in those, create an issue.
 
 ## CDN
 
