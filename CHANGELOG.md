@@ -1,3 +1,10 @@
+1.3.4 / 08.10.2021
+==================
+
+* Fixed `columns` parameter when passing a `sheets` parameter when writing multiple sheets.
+
+* Added TypeScript definitions.
+
 1.3.3 / 04.08.2021
 ==================
 
