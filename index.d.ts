@@ -5,25 +5,19 @@ type ValueType =
 	Boolean;
 
 // It's unclear how to express something like `type? = Type` in TypeScript.
-// So instead it's defined as `type: OptionalCellType<Type>`.
+// So instead it's defined as `type?: CellType<Type>`.
 // https://gitlab.com/catamphetamine/write-excel-file/-/issues/4#note_715204034
 // https://www.typescriptlang.org/docs/handbook/2/conditional-types.html
-//
-type ValueTypeStringOptional = StringConstructor | undefined;
-type ValueTypeDateOptional = DateConstructor | undefined;
-type ValueTypeNumberOptional = NumberConstructor | undefined;
-type ValueTypeBooleanOptional = BooleanConstructor | undefined;
-//
-type OptionalCellType<Type> =
+type CellType<Type> =
 	Type extends String
-		? ValueTypeStringOptional
+		? StringConstructor
 		: Type extends Date
-			? ValueTypeDateOptional
+			? DateConstructor
 			: Type extends Number
-				? ValueTypeNumberOptional
+				? NumberConstructor
 				: Type extends Boolean
-				 ? ValueTypeBooleanOptional
-				 : undefined
+					? BooleanConstructor
+					: never
 
 type BorderStyle =
 	'hair' |
@@ -68,7 +62,7 @@ interface CellStyle {
 
 interface CellProps<Type> extends CellStyle {
 	// It's unclear how to express something like `type? = Type` in TypeScript.
-	type: OptionalCellType<Type>;
+	type?: CellType<Type>;
 	// A simpler (loose) variant:
 	// type?: ValueType;
 	format?: string;
