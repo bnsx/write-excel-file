@@ -158,6 +158,18 @@ describe('writeXlsxFile', function() {
     await writeXlsxFile([data, data], { sheets: ['Sheet One', 'Sheet Two'], columns: [columns, columns], filePath: path.join(OUTPUT_DIRECTORY, 'test-cells-multiple-sheets.xlsx') })
     await writeXlsxFile(data, { columns, filePath: path.join(OUTPUT_DIRECTORY, 'test-default-font.xlsx'), fontFamily: 'Arial', fontSize: 16 })
 
+    // Test cell data type autodetection.
+    await writeXlsxFile(
+      data.map(row => row.map(cell => ({
+        ...cell,
+        type: undefined
+      }))),
+      {
+        columns,
+        filePath: path.join(OUTPUT_DIRECTORY, 'test-cells-autodetect-type.xlsx')
+      }
+    )
+
     const outputStream = fs.createWriteStream(path.join(OUTPUT_DIRECTORY, 'test-stream.xlsx'))
 
     await new Promise((resolve, reject) => {
