@@ -148,7 +148,7 @@ describe('writeXlsxFile', function() {
       // Fourth column missing intentionally
     ]
 
-    await writeXlsxFile(objects, { schema, filePath: path.join(OUTPUT_DIRECTORY, 'test-schema.xlsx') })
+    await writeXlsxFile(objects, { schema, sheet: 'Test Schema', filePath: path.join(OUTPUT_DIRECTORY, 'test-schema.xlsx') })
     await writeXlsxFile([objects, objects], { sheets: ['Sheet One', 'Sheet Two'], schema: [schema, schema], filePath: path.join(OUTPUT_DIRECTORY, 'test-schema-multiple-sheets.xlsx') })
     await writeXlsxFile(objects, { schema: schema, filePath: path.join(OUTPUT_DIRECTORY, 'test-schema-header-style.xlsx'), headerStyle: { align: 'center', color: '#cc0000', backgroundColor: '#eeeeee' } })
     await writeXlsxFile(objects, { schema: schemaNoSingleTitle, filePath: path.join(OUTPUT_DIRECTORY, 'test-schema-no-single-title.xlsx') })

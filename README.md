@@ -381,6 +381,17 @@ await writeXlsxFile(data, {
 })
 ```
 
+## Sheet name
+
+To set the default sheet name, pass a `sheet` parameter when calling `writeXlsxFile()`:
+
+```js
+await writeXlsxFile(data, {
+  filePath: '/path/to/file.xlsx',
+  sheet: 'Data'
+})
+```
+
 ## Multiple Sheets
 
 #### Schema
