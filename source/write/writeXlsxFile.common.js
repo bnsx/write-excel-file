@@ -11,6 +11,7 @@ export function generateSheets({
   headerStyle,
   fontFamily,
   fontSize,
+  orientation,
   dateFormat
 }) {
   const { getSharedStringsXml, getSharedString } = initSharedStrings()
@@ -48,7 +49,9 @@ export function generateSheets({
       getStyle,
       getSharedString,
       customFont: fontFamily || fontSize,
-      dateFormat
+      dateFormat,
+      orientation,
+      sheetId: sheetIndex + 1
     }))
     sheetIndex++
   }

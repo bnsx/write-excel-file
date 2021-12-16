@@ -96,12 +96,15 @@ type Column = {
 	width?: number;
 };
 
+type Orientation = 'landscape';
+
 export type Columns = Column[];
 
 export interface CommonOptions {
   headerStyle?: CellProps<ValueType>;
   fontFamily?: string;
   fontSize?: number;
+  orientation?: Orientation;
   dateFormat?: string;
 }
 

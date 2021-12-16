@@ -34,6 +34,7 @@ function generateXlsxFile(data, {
   headerStyle,
   fontFamily,
   fontSize,
+  orientation,
   dateFormat
 }) {
   const zip = new JSZip()
@@ -54,6 +55,7 @@ function generateXlsxFile(data, {
     headerStyle,
     fontFamily,
     fontSize,
+    orientation,
     dateFormat
   })
 

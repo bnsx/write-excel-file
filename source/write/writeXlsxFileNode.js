@@ -20,6 +20,7 @@ export default async function writeXlsxFile(data, {
 	headerStyle,
 	fontFamily,
 	fontSize,
+  orientation,
 	dateFormat
 } = {}) {
 	const archive = new Archive(filePath)
@@ -37,6 +38,7 @@ export default async function writeXlsxFile(data, {
 		headerStyle,
 		fontFamily,
 		fontSize,
+    orientation,
 		dateFormat
 	})
 

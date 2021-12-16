@@ -380,6 +380,17 @@ await writeXlsxFile(data, {
 })
 ```
 
+## Orientation
+
+To specify custom orientation (for all sheets), pass `orientation` parameter when calling `writeXlsxFile()`:
+
+```js
+await writeXlsxFile(data, {
+  filePath: '/path/to/file.xlsx',
+  orientation: 'landscape'
+})
+```
+
 ## Date Format
 
 To set the default date format, pass `dateFormat` parameter when calling `writeXlsxFile()`:
