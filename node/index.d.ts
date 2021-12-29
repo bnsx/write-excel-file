@@ -9,7 +9,7 @@ export {
 	Row
 } from '../index.d';
 
-interface Stream {
+export interface Stream {
 	pipe(output: Stream): void;
 }
 
