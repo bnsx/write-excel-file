@@ -162,6 +162,8 @@ describe('writeXlsxFile', function() {
     await writeXlsxFile(objects, { schema: schemaNoTitles, filePath: path.join(OUTPUT_DIRECTORY, 'test-schema-no-titles.xlsx') })
 
     await writeXlsxFile(data, { columns, filePath: path.join(OUTPUT_DIRECTORY, 'test-cells.xlsx') })
+    await writeXlsxFile(data, { columns, stickyRowsCount: 1, filePath: path.join(OUTPUT_DIRECTORY, 'test-cells-sticky-row.xlsx') })
+    await writeXlsxFile(data, { columns, stickyRowsCount: 2, filePath: path.join(OUTPUT_DIRECTORY, 'test-cells-sticky-rows.xlsx') })
     await writeXlsxFile(dataRowSpan, { columns, filePath: path.join(OUTPUT_DIRECTORY, 'test-cells-row-span.xlsx') })
     await writeXlsxFile(data, { columns, filePath: path.join(OUTPUT_DIRECTORY, 'test-cells-landscape.xlsx'), orientation: 'landscape' })
     await writeXlsxFile([data, data], { sheets: ['Sheet One', 'Sheet Two'], columns: [columns, columns], filePath: path.join(OUTPUT_DIRECTORY, 'test-cells-multiple-sheets.xlsx') })

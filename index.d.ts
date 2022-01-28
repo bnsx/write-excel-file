@@ -105,6 +105,7 @@ export interface CommonOptions {
   fontFamily?: string;
   fontSize?: number;
   orientation?: Orientation;
+  stickyRowsCount?: number;
   dateFormat?: string;
 }
 

@@ -402,7 +402,18 @@ await writeXlsxFile(data, {
 })
 ```
 
-## Sheet name
+## Sticky Rows
+
+To make some of the top rows "sticky" (Excel calls them "frozen"), pass `stickyRowsCount` parameter when calling `writeXlsxFile()`:
+
+```js
+await writeXlsxFile(data, {
+  filePath: '/path/to/file.xlsx',
+  stickyRowsCount: 1
+})
+```
+
+## Sheet Name
 
 To set the default sheet name, pass a `sheet` parameter when calling `writeXlsxFile()`:
 

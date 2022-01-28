@@ -12,6 +12,7 @@ export function generateSheets({
   fontFamily,
   fontSize,
   orientation,
+  stickyRowsCount,
   dateFormat
 }) {
   const { getSharedStringsXml, getSharedString } = initSharedStrings()
@@ -51,6 +52,7 @@ export function generateSheets({
       customFont: fontFamily || fontSize,
       dateFormat,
       orientation,
+      stickyRowsCount,
       sheetId: sheetIndex + 1
     }))
     sheetIndex++
