@@ -3,7 +3,7 @@
   "version": "1.4.0",
   "description": "Write simple `*.xlsx` files in a browser or Node.js",
   "module": "index.js",
-  "main": "index.commonjs.js",
+  "main": "index.cjs",
   "type": "module",
   "exports": {
     ".": {

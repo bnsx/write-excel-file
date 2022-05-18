@@ -2,7 +2,7 @@
   "private": true,
   "name": "write-excel-file/node",
   "version": "1.0.0",
-  "main": "index.commonjs.js",
+  "main": "index.cjs",
   "module": "index.js",
   "type": "module",
   "exports": {
