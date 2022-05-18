@@ -30,7 +30,7 @@
     "build-es6-modules": "npm-run-all build-es6-modules-client build-es6-modules-server",
     "build-es6-modules-client": "cross-env BABEL_ENV=es6 babel ./source --out-dir ./modules --source-maps --ignore ./source/write/writeXlsxFileNode.js",
     "build-es6-modules-server": "cross-env BABEL_ENV=es6/server babel ./source/write/writeXlsxFileNode.js --out-dir ./modules/write --source-maps",
-    "browser-build": "rollup --config rollup.config.js",
+    "browser-build": "rollup --config rollup.config.mjs",
     "build": "npm-run-all clean-for-build build-commonjs-modules build-es6-modules browser-build",
     "prepublishOnly": "npm-run-all build test browser-build"
   },
