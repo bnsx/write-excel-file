@@ -5,7 +5,7 @@ import fs from 'fs'
 
 import writeXlsxFile from '../source/write/writeXlsxFileNode.js'
 
-const OUTPUT_DIRECTORY = path.join(__dirname, '..', 'test-output')
+const OUTPUT_DIRECTORY = path.resolve('./test-output')
 
 describe('writeXlsxFile', function() {
   it('should generate *.xlsx files', async function() {
