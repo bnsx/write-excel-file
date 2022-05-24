@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import os from 'os'
+// import { PassThrough } from 'stream'
 
 import Archive from './archive.js'
 
@@ -76,6 +77,9 @@ export default async function writeXlsxFile(data, {
 		await removeDirectory(root)
 	} else {
 		return archive.write()
+		// const outputStream = new PassThrough()
+		// archive.write().pipe(outputStream)
+		// return outputStream
 	}
 }
 
