@@ -85,7 +85,7 @@ export type Row = Cell[];
 
 export type SheetData = Row[];
 
-interface ColumnSchema<Object, Type> extends CellProps<Type> {
+export interface ColumnSchema<Object, Type> extends CellProps<Type> {
 	// Column title.
 	column?: string;
 	// Column width (in characters).
