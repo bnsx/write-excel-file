@@ -1,4 +1,6 @@
-type ValueType =
+// Some users have requested exporting `ValueType` type.
+// https://gitlab.com/catamphetamine/write-excel-file/-/issues/30
+export type ValueType =
 	String |
 	Date |
 	Number |
@@ -85,6 +87,8 @@ export type Row = Cell[];
 
 export type SheetData = Row[];
 
+// Some users have requested exporting `ColumnSchema` type.
+// https://gitlab.com/catamphetamine/write-excel-file/-/issues/30
 export interface ColumnSchema<Object, Type> extends CellProps<Type> {
 	// Column title.
 	column?: string;
