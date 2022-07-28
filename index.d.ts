@@ -49,6 +49,8 @@ interface CellStyle {
 	span?: number;
 	rowSpan?: number;
 	wrap?: boolean;
+	fontFamily?: string;
+	fontSize?: number;
 	fontWeight?: FontWeight;
 	fontStyle?: FontStyle;
 	color?: Color;
