@@ -111,7 +111,7 @@ export default function initStyles({
     }
     // Get font ID.
     let fontId = customFont ? 0 : undefined
-    if (fontWeight || fontStyle || color) {
+    if (fontFamily || fontSize || fontWeight || fontStyle || color) {
       fontId = fontsIndex[fontKey]
       if (fontId === undefined) {
         fontId = fontsIndex[fontKey] = String(fonts.length)
