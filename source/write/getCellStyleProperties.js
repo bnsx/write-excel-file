@@ -2,11 +2,12 @@ export default function getCellStyleProperties(cell) {
 	const {
 		align,
 		alignVertical,
+		textRotation,
+		wrap,
 		fontFamily,
 		fontSize,
 		fontWeight,
 		fontStyle,
-		wrap,
 		color,
 		backgroundColor,
 		borderColor,
@@ -23,11 +24,12 @@ export default function getCellStyleProperties(cell) {
 
 	if (align ||
 		alignVertical ||
+		textRotation ||
+		wrap ||
 		fontFamily ||
 		fontSize ||
 		fontWeight ||
 		fontStyle ||
-		wrap ||
 		color ||
 		backgroundColor ||
 		borderColor ||
@@ -44,11 +46,12 @@ export default function getCellStyleProperties(cell) {
 		return omitUndefinedProperties({
 			align,
 			alignVertical,
+			textRotation,
+			wrap,
 			fontFamily,
 			fontSize,
 			fontWeight,
 			fontStyle,
-			wrap,
 			color,
 			backgroundColor,
 			borderColor,

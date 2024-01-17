@@ -76,6 +76,7 @@ interface CellStyle {
 	span?: number;
 	rowSpan?: number;
 	wrap?: boolean;
+	textRotation?: number;
 	fontFamily?: string;
 	fontSize?: number;
 	fontWeight?: FontWeight;
