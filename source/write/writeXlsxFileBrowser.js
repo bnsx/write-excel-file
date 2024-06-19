@@ -1,28 +1,20 @@
-import UZIP from 'uzip'
-import FileSaver from 'file-saver'
-
-import generateWorkbookXml from './statics/workbook.xml.js'
-import generateWorkbookXmlRels from './statics/workbook.xml.rels.js'
-import rels from './statics/rels.js'
-import contentTypes from './statics/[Content_Types].xml.js'
-
-import { generateSheets } from './writeXlsxFile.common.js'
+import FileSaver from 'file-saver';
+import generateWorkbookXml from './statics/workbook.xml.js';
+import generateWorkbookXmlRels from './statics/workbook.xml.rels.js';
+import rels from './statics/rels.js';
+import contentTypes from './statics/[Content_Types].xml.js';
+import { generateSheets } from './writeXlsxFile.common.js';
+import { compress } from 'fflate'; // Import fflate
 
 export default function writeXlsxFile(data, { fileName, ...rest } = {}) {
   return generateXlsxFile(data, rest).then((blob) => {
     if (fileName) {
-      return FileSaver.saveAs(blob, fileName)
+      return FileSaver.saveAs(blob, fileName);
     }
-    return blob
-  })
+    return blob;
+  });
 }
 
-/**
- * Writes an *.xlsx file into a "blob".
- * https://github.com/egeriis/zipcelx/issues/68
- * "The reason if you want to send the excel file or store it natively on Cordova/capacitor app".
- * @return {Blob}
- */
 function generateXlsxFile(data, {
   sheet: sheetName,
   sheets: sheetNames,
@@ -36,10 +28,10 @@ function generateXlsxFile(data, {
   stickyColumnsCount,
   dateFormat
 }) {
-  const zip = {}
+  const zip = new compress(); // Initialize fflate compressor
 
-  zip['_rels/.rels'] = UZIP.encode(strToU8(rels))
-  zip['[Content_Types].xml'] = UZIP.encode(strToU8(contentTypes))
+  zip.file('_rels/.rels', rels);
+  zip.file('[Content_Types].xml', contentTypes);
 
   const {
     sheets,
@@ -58,27 +50,17 @@ function generateXlsxFile(data, {
     stickyRowsCount,
     stickyColumnsCount,
     dateFormat
-  })
+  });
 
-  const xl = {}
-  xl['_rels/workbook.xml.rels'] = UZIP.encode(strToU8(generateWorkbookXmlRels({ sheets })))
-  xl['workbook.xml'] = UZIP.encode(strToU8(generateWorkbookXml({ sheets, stickyRowsCount, stickyColumnsCount })))
-  xl['styles.xml'] = UZIP.encode(strToU8(getStylesXml()))
-  xl['sharedStrings.xml'] = UZIP.encode(strToU8(getSharedStringsXml()))
+  const xl = zip.folder('xl');
+  xl.file('_rels/workbook.xml.rels', generateWorkbookXmlRels({ sheets }));
+  xl.file('workbook.xml', generateWorkbookXml({ sheets, stickyRowsCount, stickyColumnsCount }));
+  xl.file('styles.xml', getStylesXml());
+  xl.file('sharedStrings.xml', getSharedStringsXml());
 
   for (const { id, data } of sheets) {
-    xl[`worksheets/sheet${id}.xml`] = UZIP.encode(strToU8(data))
+    xl.file(`worksheets/sheet${id}.xml`, data);
   }
 
-  zip['xl'] = xl
-
-  const blob = new Blob([UZIP.encode(zip)], {
-    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-  })
-
-  return Promise.resolve(blob)
-}
-
-function strToU8(str) {
-  return new TextEncoder().encode(str)
+  return zip.compress(); // Use fflate's compression method
 }
