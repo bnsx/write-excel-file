@@ -1,20 +1,20 @@
-import UZIP from 'uzip'
-import FileSaver from 'file-saver'
+import { strToU8, zipSync } from "fflate";
+import FileSaver from "file-saver";
 
-import generateWorkbookXml from './statics/workbook.xml.js'
-import generateWorkbookXmlRels from './statics/workbook.xml.rels.js'
-import rels from './statics/rels.js'
-import contentTypes from './statics/[Content_Types].xml.js'
+import generateWorkbookXml from "./statics/workbook.xml.js";
+import generateWorkbookXmlRels from "./statics/workbook.xml.rels.js";
+import rels from "./statics/rels.js";
+import contentTypes from "./statics/[Content_Types].xml.js";
 
-import { generateSheets } from './writeXlsxFile.common.js'
+import { generateSheets } from "./writeXlsxFile.common.js";
 
 export default function writeXlsxFile(data, { fileName, ...rest } = {}) {
   return generateXlsxFile(data, rest).then((blob) => {
     if (fileName) {
-      return FileSaver.saveAs(blob, fileName)
+      return FileSaver.saveAs(blob, fileName);
     }
-    return blob
-  })
+    return blob;
+  });
 }
 
 /**
@@ -23,29 +23,30 @@ export default function writeXlsxFile(data, { fileName, ...rest } = {}) {
  * "The reason if you want to send the excel file or store it natively on Cordova/capacitor app".
  * @return {Blob}
  */
-function generateXlsxFile(data, {
-  sheet: sheetName,
-  sheets: sheetNames,
-  schema,
-  columns,
-  headerStyle,
-  fontFamily,
-  fontSize,
-  orientation,
-  stickyRowsCount,
-  stickyColumnsCount,
-  dateFormat
-}) {
-  const zip = {}
+function generateXlsxFile(
+  data,
+  {
+    sheet: sheetName,
+    sheets: sheetNames,
+    schema,
+    columns,
+    headerStyle,
+    fontFamily,
+    fontSize,
+    orientation,
+    stickyRowsCount,
+    stickyColumnsCount,
+    dateFormat,
+  }
+) {
+  let zip = {};
 
-  zip['_rels/.rels'] = UZIP.encode(strToU8(rels))
-  zip['[Content_Types].xml'] = UZIP.encode(strToU8(contentTypes))
+  // Encode and add static files to the zip object
+  zip["_rels/.rels"] = strToU8(rels);
+  zip["[Content_Types].xml"] = strToU8(contentTypes);
 
-  const {
-    sheets,
-    getSharedStringsXml,
-    getStylesXml
-  } = generateSheets({
+  // Generate sheet-related XML data
+  const { sheets, getSharedStringsXml, getStylesXml } = generateSheets({
     data,
     sheetName,
     sheetNames,
@@ -57,28 +58,32 @@ function generateXlsxFile(data, {
     orientation,
     stickyRowsCount,
     stickyColumnsCount,
-    dateFormat
-  })
+    dateFormat,
+  });
 
-  const xl = {}
-  xl['_rels/workbook.xml.rels'] = UZIP.encode(strToU8(generateWorkbookXmlRels({ sheets })))
-  xl['workbook.xml'] = UZIP.encode(strToU8(generateWorkbookXml({ sheets, stickyRowsCount, stickyColumnsCount })))
-  xl['styles.xml'] = UZIP.encode(strToU8(getStylesXml()))
-  xl['sharedStrings.xml'] = UZIP.encode(strToU8(getSharedStringsXml()))
+  const xl = {};
+  xl["_rels/workbook.xml.rels"] = strToU8(generateWorkbookXmlRels({ sheets }));
+  xl["workbook.xml"] = strToU8(generateWorkbookXml({ sheets, stickyRowsCount, stickyColumnsCount }));
+  xl["styles.xml"] = strToU8(getStylesXml());
+  xl["sharedStrings.xml"] = strToU8(getSharedStringsXml());
 
   for (const { id, data } of sheets) {
-    xl[`worksheets/sheet${id}.xml`] = UZIP.encode(strToU8(data))
+    xl[`worksheets/sheet${id}.xml`] = strToU8(data);
   }
 
-  zip['xl'] = xl
+  zip["xl"] = xl;
 
-  const blob = new Blob([UZIP.encode(zip)], {
-    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-  })
+  // Create the zip buffer
+  const zipBuffer = zipSync(zip, { level: 9 });
 
-  return Promise.resolve(blob)
+  // Create a blob from the zip buffer
+  const blob = new Blob([zipBuffer], {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  });
+
+  return Promise.resolve(blob);
 }
 
-function strToU8(str) {
-  return new TextEncoder().encode(str)
-}
+// function strToU8(str) {
+//   return new TextEncoder().encode(str);
+// }
