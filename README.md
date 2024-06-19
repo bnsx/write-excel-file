@@ -4,7 +4,9 @@ Write simple `*.xlsx` files in a browser or Node.js
 
 [Demo](https://catamphetamine.gitlab.io/write-excel-file/)
 
-Also check out [`read-excel-file`](https://www.npmjs.com/package/read-excel-file) for reading small to medium `*.xlsx` files.
+### This repository is forked from [Here](https://gitlab.com/catamphetamine/write-excel-file)
+
+Reducing Bundle Size by Replacing JSZip with UZIP for .xlsx File Generation
 
 ## Install
 
