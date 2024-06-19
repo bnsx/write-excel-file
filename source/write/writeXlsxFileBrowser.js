@@ -1,7 +1,4 @@
-// Copy-pasted from:
-// https://github.com/davidramos-om/zipcelx-on-steroids/blob/master/src/zipcelx.js
-
-import JSZip from 'jszip'
+import UZIP from 'uzip'
 import FileSaver from 'file-saver'
 
 import generateWorkbookXml from './statics/workbook.xml.js'
@@ -39,10 +36,10 @@ function generateXlsxFile(data, {
   stickyColumnsCount,
   dateFormat
 }) {
-  const zip = new JSZip()
+  const zip = {}
 
-  zip.file('_rels/.rels', rels)
-  zip.file('[Content_Types].xml', contentTypes)
+  zip['_rels/.rels'] = UZIP.encode(strToU8(rels))
+  zip['[Content_Types].xml'] = UZIP.encode(strToU8(contentTypes))
 
   const {
     sheets,
@@ -63,18 +60,25 @@ function generateXlsxFile(data, {
     dateFormat
   })
 
-  const xl = zip.folder('xl')
-  xl.file('_rels/workbook.xml.rels', generateWorkbookXmlRels({ sheets }))
-  xl.file('workbook.xml', generateWorkbookXml({ sheets, stickyRowsCount, stickyColumnsCount }))
-  xl.file('styles.xml', getStylesXml())
-  xl.file('sharedStrings.xml', getSharedStringsXml())
+  const xl = {}
+  xl['_rels/workbook.xml.rels'] = UZIP.encode(strToU8(generateWorkbookXmlRels({ sheets })))
+  xl['workbook.xml'] = UZIP.encode(strToU8(generateWorkbookXml({ sheets, stickyRowsCount, stickyColumnsCount })))
+  xl['styles.xml'] = UZIP.encode(strToU8(getStylesXml()))
+  xl['sharedStrings.xml'] = UZIP.encode(strToU8(getSharedStringsXml()))
 
   for (const { id, data } of sheets) {
-    xl.file(`worksheets/sheet${id}.xml`, data)
+    xl[`worksheets/sheet${id}.xml`] = UZIP.encode(strToU8(data))
   }
 
-  return zip.generateAsync({
-    type: 'blob',
-    mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  zip['xl'] = xl
+
+  const blob = new Blob([UZIP.encode(zip)], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
   })
+
+  return Promise.resolve(blob)
+}
+
+function strToU8(str) {
+  return new TextEncoder().encode(str)
 }
